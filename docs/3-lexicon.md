@@ -1,0 +1,60 @@
+# Rare English Lexicon
+
+- [ ] Ad hoc : Without a fixed format.
+- [ ] Adversarial : Crafted to subvert the system. Adversarial prompt-injection inputs hide instructions in markdown comments or image alt text.
+- [ ] Anchor (verb) : Place a term, fact, or instruction where the model will reliably attend to it — typically the top or bottom of the input.
+- [ ] Attribution : Naming the source of a claim (URL, document, date). Lost attribution cannot be reconstructed downstream.
+- [ ] Bloat : Unnecessary growth — of context, of `CLAUDE.md`, of skill descriptions. "Bloated" content taxes every session that loads it.
+- [ ] Boilerplate : Repetitive scaffolding code. Claude Code generates it so engineers don't have to.
+- [ ] Calibrate / calibration : Map a raw score to a real-world reliability rate using labeled data. Model self-reported confidence is "poorly calibrated" — high scores don't mean low error.
+- [ ] Cap (verb) : Set a numeric ceiling — `maxTurns`, retries, iteration count, refund amount.
+- [ ] Decompose : Break a request into smaller independently solvable items. Coordinator decomposition is the most common error in multi-agent pipelines.
+- [ ] Deterministic : Same input always produces the same output. Hooks are deterministic; prompts are probabilistic.
+- [ ] Dilution : Spreading attention across too much content so signal is lost. Larger context windows do not fix attention dilution.
+- [ ] Disambiguate : Make a choice between similar options clear. Tool descriptions disambiguate similar tools; `tool_use_id` disambiguates which result belongs to which call.
+- [ ] Distractor : An incorrect exam answer designed to mislead — see Concepts.
+- [ ] Drift : Quiet movement away from a desired state — role drift (agent does the wrong job), codebase drift (files changed since last session), format drift (output shape varies).
+- [ ] Embed : Place inline. Adversaries embed instructions in fetched content; you embed file IDs in messages.
+- [ ] Ephemeral : Short-lived. `cache_control: {type: "ephemeral"}` marks content cached for the 5-min (or 1h) window, not permanently.
+- [ ] Escalate : Hand off to a human (or higher tier of authority). Explicit human requests, policy gaps, and threshold breaches all trigger escalation.
+- [ ] Extrapolate : Apply policy to a case it doesn't cover. Anti-pattern in support — the rule is "when policy is silent, escalate".
+- [ ] Fan-in : Many inputs converging on one consumer. The auth module has high fan-in if many services depend on it.
+- [ ] Fan-out : One node dispatching work to many. Coordinator fans out parallel `Task` calls in a single response.
+- [ ] Friction (friction-free) : A friction-free workflow has no interruptions — typical of `acceptEdits` mode with a good allow-list.
+- [ ] Gotcha : A subtle pitfall a reader is likely to miss. The exercises chapter ends each section with explicit Gotchas.
+- [ ] Halt : Stop a pipeline or process. A blocking pre-merge check that takes 24h halts developer workflow.
+- [ ] Hedge / hedging : Vague qualifying language ("approximately", "roughly"). "Approximately" is a tell that the model is hedging an unsupported number.
+- [ ] Heuristic : A rough rule of thumb. "If you'd ask a senior engineer to whiteboard, use plan mode" is a heuristic for choosing execution mode.
+- [ ] Hijack : Subvert the agent's intended behavior. Prompt-injection content tries to hijack agent actions.
+- [ ] Hub-and-spoke : Topology with a central hub connected to peripheral spokes — no spoke-to-spoke links. Used here for coordinator-subagent communication.
+- [ ] Idempotent : Repeats are safe — calling `cancel_order` twice has the same effect as once. The `idempotentHint` annotation declares this.
+- [ ] Inject : Insert into context — inject summaries into a fresh session, inject `<case_facts>` into the system prompt, inject untrusted content with delimiters.
+- [ ] Inline : Included directly in the request rather than referenced. Inline base64 PDFs bloat every subsequent request.
+- [ ] Knob : A single tunable parameter. The `effort` knob (`"low"` → `"max"`) is the simplest dial for response thoroughness.
+- [ ] Lockdown : Restrictive configuration. The lock-down CI pattern uses `dontAsk` + explicit `allow` list + denied secrets.
+- [ ] Lossy : Information is irretrievably reduced. Compaction is lossy by design — pin invariants you can't lose.
+- [ ] Pin (verb) : Keep content outside a region that will be summarized or rewritten. Pin IDs and amounts outside the compactable region.
+- [ ] Plumbing : Low-level wiring between components. The MCP connector avoids custom tool plumbing for third-party integrations.
+- [ ] Pollute (context) : Add noise that crowds out signal. Verbose subagent output pollutes the coordinator's context.
+- [ ] Probabilistic : Output varies run to run. Prompts are probabilistic — they fail eventually, so they cannot enforce financial or safety rules.
+- [ ] Promote (a capability) : Reclassify it — e.g., promote a static tool to a resource if it never has side effects.
+- [ ] Provenance : The audit trail of where information came from. Lost provenance cannot be recovered; require structured claim-source mappings from the start.
+- [ ] Provision (over-provisioned) : Give an agent more tools than its role needs. Over-provisioning causes role drift.
+- [ ] Ratchet up : Move stepwise to a more permissive mode — `default` → `acceptEdits` once you've seen which tools Claude reaches for.
+- [ ] Round-trip : One full API request-and-response. Programmatic tool calling collapses many round-trips into one.
+- [ ] Salience : How attention-grabbing a piece of content is, given its position. Beginning and end have high salience; middle has low.
+- [ ] Sanitize : Strip or neutralize untrusted content before the model sees it. Done in a `PostToolUse` hook.
+- [ ] Sentiment : Emotional tone of a message. Not a reliable signal for escalation — sentiment ≠ case complexity.
+- [ ] Spawn : Create a subagent. The coordinator spawns subagents in parallel with multiple `Task` calls in a single response.
+- [ ] Stratified : Partitioned into segments before sampling — by document type, by field. Aggregate metrics over a stratified population can hide segment failures.
+- [ ] Surcharge : The extra cost of writing to cache. The 1-hour cache TTL has a higher write surcharge than the 5-minute tier.
+- [ ] Surface (verb) : Expose explicitly so a downstream component can act on it. Surface constraints in plan mode; surface conflicting claims with attribution.
+- [ ] Synthesize : Combine findings from multiple sources into a single coherent output. The synthesis subagent runs on findings, not on the original question.
+- [ ] Tail (long tail) : The minority of cases that account for most failures. Advisor tool pays off when the workload has a long tail of hard sub-decisions.
+- [ ] Telemetry : Metrics, logs, and traces emitted for observability. Enabled via `CLAUDE_CODE_ENABLE_TELEMETRY=1` + `OTEL_*` env vars.
+- [ ] Transient : Temporary — likely to resolve on retry. `errorCategory: "transient"` with `isRetryable: true` is the only retryable error class.
+- [ ] Trim : Reduce verbose tool output to only the fields the next turn needs. Trim at the hook layer so every subsequent turn sees the lean version.
+- [ ] Untrusted : Originating from a source that may be adversarial — fetched documents, web pages, tool results. Treat as data only.
+- [ ] Verbatim : Exactly as written, character for character. `<case_facts>` content must persist verbatim through summarization.
+- [ ] Whiteboard (verb) : Sketch the design before coding. "If you'd ask a senior engineer to whiteboard, use plan mode."
+- [ ] Wire (wire up) : Connect components so a feature works end-to-end — "wire the SDK to OpenTelemetry via env vars".
